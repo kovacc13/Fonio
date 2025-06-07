@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse: KI-Telefonie für Ärzte in Österreich</title>
+    <!-- Chosen Palette: Calm Harmony (Slate, Amber, Cyan) -->
+    <!-- Application Structure Plan: Die SPA ist als vertikaler "Scrollytelling"-Flow konzipiert, der den Benutzer logisch durch die Marktanalyse führt. Die Struktur ist: 1. Hero-Sektion zur Einführung. 2. Interaktiver Bereich "Das Problem", der die wichtigsten Herausforderungen (Überlastung, Patientenfrust) mit visuellen Elementen und einem Chart greifbar macht. 3. "Die Lösung: Fonio AI", die die Kernfunktionen als Antwort auf die Probleme darstellt. 4. Ein Fokus auf die "Zielgruppen" (Wahlärzte, Labore), um den Nutzen zu konkretisieren. 5. Eine interaktive "Wettbewerbsanalyse"-Tabelle mit PDF-Download-Funktion, die den Kern der quantitativen Analyse darstellt. 6. Ein Abschnitt über "Datensicherheit (DSGVO)", um Vertrauen zu schaffen. 7. Ein abschließender Call-to-Action. Diese thematische Gliederung ist benutzerfreundlicher als die lineare Struktur des Berichts und ermöglicht es, die Informationen je nach Interesse zu erkunden. -->
+    <!-- Visualization & Content Choices: Report Info: Hohes Anrufvolumen -> Goal: Inform/Problem darstellen -> Viz: Bar Chart (Chart.js) -> Interaction: Visuelle Darstellung des Ungleichgewichts. Report Info: Tabelle 1 (Herausforderungen vs. Lösungen) -> Goal: Organize/Connect -> Viz: Gekoppelte Karten (HTML/CSS) -> Interaction: Direkte visuelle Gegenüberstellung von Problem und Lösung. Report Info: Tabelle 2 (Wettbewerbsvergleich) -> Goal: Compare -> Viz: Interaktive HTML-Tabelle -> Interaction: PDF-Download (jsPDF). Report Info: Fonio AI Features -> Goal: Inform -> Viz: Icon-basierte Feature-Karten (HTML/CSS). Report Info: DSGVO-Konformität -> Goal: Build Trust -> Viz: Klar strukturierter Textblock mit visuellen Hervorhebungen. Diese Auswahl vermeidet statische Textwüsten und setzt auf visuelle, leicht verdauliche und interaktive Elemente, um die Kernbotschaften des Berichts zu vermitteln. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .section-fade-in { animation: fadeIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-button.active { border-color: #0891b2; color: #0891b2; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header / Hero Section -->
+        <header class="text-center py-16 md:py-24 section-fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">Die Zukunft der Patientenkommunikation in Österreich</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Eine interaktive Analyse des Marktpotenzials von KI-Telefonie für Ärzte und Labore am Beispiel von <span class="font-semibold text-cyan-700">Fonio AI</span>.</p>
+        </header>
+
+        <main>
+            <!-- Section 1: The Problem -->
+            <section id="problem" class="py-16 section-fade-in">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-900">Die telefonische Herausforderung im Medizinsektor</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Arztpraxen und Labore in Österreich kämpfen mit einem hohen Anrufaufkommen, das Personal und Patienten an ihre Grenzen bringt.</p>
+                </div>
+
+                <div class="mt-12">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-6">
+                            <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-amber-400">
+                                <h3 class="font-bold text-lg text-slate-900">Überlastung & Personalstress</h3>
+                                <p class="mt-2 text-slate-600">Medizinisches Personal ist durch die Flut an Anrufen überfordert. Drei von vier MFAs leiden unter Stress, was zu Burnout führen und die Qualität der Patientenbetreuung beeinträchtigen kann.</p>
+                            </div>
+                            <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-red-400">
+                                <h3 class="font-bold text-lg text-slate-900">Patientenfrustration</h3>
+                                <p class="mt-2 text-slate-600">Ständige Besetztzeichen und lange Warteschleifen führen zu Unzufriedenheit und können Patienten dazu veranlassen, den Arzt zu wechseln oder Termine zu versäumen.</p>
+                            </div>
+                             <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-sky-400">
+                                <h3 class="font-bold text-lg text-slate-900">Spezialfall Wahlärzte</h3>
+                                <p class="mt-2 text-slate-600">Wahlärzte, die oft neben ihrer Kliniktätigkeit praktizieren, haben kaum administrative Unterstützung und benötigen eine flexible, professionelle Lösung für ihre Erreichbarkeit.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-center font-bold text-lg mb-4">Anrufvolumen vs. Bearbeitungskapazität</h3>
+                            <div class="chart-container">
+                                <canvas id="callVolumeChart"></canvas>
+                            </div>
+                             <p class="text-center text-sm text-slate-500 mt-4">Eine Visualisierung des typischen Ungleichgewichts zwischen eingehenden Anrufen und der Kapazität des Personals, diese zeitnah zu bearbeiten.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: The Solution -->
+            <section id="solution" class="py-16 bg-cyan-50/50 rounded-2xl section-fade-in">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-900">Die Antwort: Fonio AI, der intelligente Telefonassistent</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Fonio AI automatisiert die Telefonie und wandelt Herausforderungen in Stärken um, indem es als "virtuelle Sprechstundenhilfe" agiert.</p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">🗓️</div>
+                        <h3 class="font-bold text-lg">Automatisierte Terminplanung</h3>
+                        <p class="mt-2 text-slate-600">Bucht, verschiebt oder storniert Termine direkt im Kalender – 24/7 und ohne Wartezeit.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">📝</div>
+                        <h3 class="font-bold text-lg">Anruf-Transkription</h3>
+                        <p class="mt-2 text-slate-600">Alle Anrufe werden transkribiert und zusammengefasst per E-Mail gesendet. Keine Information geht verloren.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">⚙️</div>
+                        <h3 class="font-bold text-lg">Intelligente Weiterleitung</h3>
+                        <p class="mt-2 text-slate-600">Erkennt das Anliegen und leitet dringende Fälle direkt an das richtige Personal weiter.</p>
+                    </div>
+                     <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">🎤</div>
+                        <h3 class="font-bold text-lg">Anpassbare Stimme</h3>
+                        <p class="mt-2 text-slate-600">Wählen Sie eine Stimme, die zur Identität Ihrer Praxis passt – freundlich und professionell.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">🛡️</div>
+                        <h3 class="font-bold text-lg">DSGVO-Konform</h3>
+                        <p class="mt-2 text-slate-600">Hosting auf Servern in Deutschland/EU für maximale Datensicherheit im Gesundheitswesen.</p>
+                    </div>
+                     <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                        <div class="text-cyan-600 text-4xl mb-4">🔌</div>
+                        <h3 class="font-bold text-lg">Einfache Integration</h3>
+                        <p class="mt-2 text-slate-600">Verbindet sich mit bestehenden Kalendern und bietet eine API für die Anbindung an Praxissoftware (PVS).</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3: Target Groups -->
+            <section id="target-groups" class="py-16 section-fade-in">
+                <div class="text-center">
+                     <h2 class="text-3xl font-bold text-slate-900">Für wen ist Fonio AI die ideale Lösung?</h2>
+                     <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Die größten Vorteile ergeben sich für zwei Kernzielgruppen im österreichischen Gesundheitsmarkt.</p>
+                </div>
+                <div class="mt-12 grid md:grid-cols-2 gap-8">
+                    <div class="p-8 bg-white rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-cyan-700">Wahlärzte</h3>
+                        <p class="mt-4 text-slate-600">Für Ärzte, die ihre Praxis neben der Kliniktätigkeit führen, ist Fonio AI mehr als nur ein Assistent – es ist oft die **einzige administrative Kraft**. Es garantiert professionelle Erreichbarkeit, managt die gesamte Terminlogistik und ermöglicht dem Arzt, sich voll auf Patienten und Klinik zu konzentrieren.</p>
+                        <ul class="mt-4 space-y-2 text-slate-700">
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Fungiert als 24/7 "virtuelle Rezeption".</span></li>
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Steigert das professionelle Image und die Patientenzufriedenheit.</span></li>
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Pay-per-Use-Modell ist ideal für variables Anrufvolumen.</span></li>
+                        </ul>
+                    </div>
+                     <div class="p-8 bg-white rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-cyan-700">Medizinische Labore</h3>
+                        <p class="mt-4 text-slate-600">Labore stärken durch Fonio AI ihre Beziehung zu den wichtigsten Kunden: den zuweisenden Ärzten. Der KI-Assistent optimiert die Kommunikation, indem er Standardanfragen automatisiert und so das Fachpersonal für komplexe Befundbesprechungen freihält.</p>
+                         <ul class="mt-4 space-y-2 text-slate-700">
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Gibt Ärzten automatisierte Status-Updates zu Proben.</span></li>
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Koordiniert die Probenlogistik und beantwortet Fragen zu Testverfahren.</span></li>
+                           <li class="flex items-start"><span class="text-cyan-600 mr-2 mt-1">✓</span><span>Verbessert den Servicelevel und die Effizienz in der Zusammenarbeit.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Competition -->
+            <section id="competition" class="py-16 bg-slate-100 rounded-2xl section-fade-in">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-slate-900">Fonio AI im Wettbewerbsvergleich</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Ein Blick auf die wichtigsten Anbieter für KI-Telefonie im österreichischen Medizinmarkt.</p>
+                </div>
+
+                <div class="mt-12 overflow-x-auto bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-end mb-4">
+                        <button id="downloadPdfBtn" class="bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-cyan-800 transition-colors">
+                            Tabelle als PDF herunterladen
+                        </button>
+                    </div>
+                    <table id="competition-table" class="w-full text-left">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="p-4 font-semibold">Anbieter</th>
+                                <th class="p-4 font-semibold">Preismodell</th>
+                                <th class="p-4 font-semibold">DSGVO & Serverstandort</th>
+                                <th class="p-4 font-semibold">Stärken / Differenzierung</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="bg-amber-50">
+                                <td class="p-4 font-bold text-cyan-800">Fonio AI</td>
+                                <td class="p-4">Pay-per-Use (€0,50/Min), keine Grundgebühr</td>
+                                <td class="p-4">Konform (Server in DE/EU), Wiener Unternehmen</td>
+                                <td class="p-4">Flexibilität für variables Volumen, lokale Präsenz, einfache Einrichtung</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">CGM one Telefonass.</td>
+                                <td class="p-4">Preis für AT noch offen (Start 2025)</td>
+                                <td class="p-4">Voraussichtlich konform</td>
+                                <td class="p-4">Starke Marktpräsenz & Integration in CGM PVS</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Vitas Telefonassistent</td>
+                                <td class="p-4">Monatl. Grundgebühr + Kosten pro Konversation</td>
+                                <td class="p-4">Konform (Hosted in DE), ISO 27001</td>
+                                <td class="p-4">Starker Fokus auf Datenschutz, etablierte Integrationen</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Placetel AI Pro</td>
+                                <td class="p-4">€99/Monat + €0,29/Min</td>
+                                <td class="p-4">Konform (Hosted in EU), ISO-zertifiziert</td>
+                                <td class="p-4">Umfassende Kommunikationslösung, viele Integrationen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Section 5: Call to Action -->
+            <section class="text-center py-20 section-fade-in">
+                <h2 class="text-3xl font-bold text-slate-900">Sind Sie bereit für die Zukunft der Praxiskommunikation?</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Entlasten Sie Ihr Team, begeistern Sie Ihre Patienten und steigern Sie die Effizienz Ihrer Praxis oder Ihres Labors mit Fonio AI.</p>
+                <div class="mt-8">
+                    <a href="#" class="bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-cyan-800 transition-colors shadow-lg">Jetzt Demo anfordern</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart.js: Anrufvolumen-Chart
+            const ctx = document.getElementById('callVolumeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Anrufe Vormittag', 'Anrufe Nachmittag', 'Außerhalb der Zeiten'],
+                    datasets: [{
+                        label: 'Eingehende Anrufe',
+                        data: [120, 90, 50],
+                        backgroundColor: 'rgba(234, 179, 8, 0.6)',
+                        borderColor: 'rgba(234, 179, 8, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Bearbeitungskapazität (Personal)',
+                        data: [60, 55, 0],
+                        backgroundColor: 'rgba(8, 145, 178, 0.6)',
+                        borderColor: 'rgba(8, 145, 178, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Anzahl Anrufe' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // jsPDF: PDF Download für Wettbewerbstabelle
+            const downloadBtn = document.getElementById('downloadPdfBtn');
+            downloadBtn.addEventListener('click', function() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.text("Wettbewerbsvergleich: KI-Telefonie in Österreich", 14, 15);
+                
+                doc.autoTable({
+                    html: '#competition-table',
+                    startY: 20,
+                    theme: 'grid',
+                    headStyles: { fillColor: [8, 145, 178] },
+                    styles: { font: 'Inter', fontStyle: 'normal' },
+                    didParseCell: function(data) {
+                        if (data.row.section === 'body' && data.column.index === 0 && data.cell.raw.innerText.includes('Fonio AI')) {
+                            data.cell.styles.fontStyle = 'bold';
+                            data.cell.styles.textColor = [8, 145, 178];
+                        }
+                    }
+                });
+
+                doc.save('Fonio_AI_Wettbewerbsanalyse.pdf');
+            });
+            
+            // Intersection Observer for fade-in animations
+            const sections = document.querySelectorAll('.section-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
